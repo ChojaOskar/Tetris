@@ -1,0 +1,27 @@
+	A
+	A
+	A
+	A     %
+
+	BB
+	 B
+	 B    %
+
+	CC
+	C
+	C     %
+
+	D
+	DD
+	 D    %
+
+	 E
+	EE
+	E     %
+
+	FF
+	FF    %
+
+	G
+	GG
+	G     %

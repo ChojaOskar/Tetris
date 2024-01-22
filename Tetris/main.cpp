@@ -19,8 +19,40 @@ void ncurses_config(){
 	noecho();
 }
 
+int x1,x2,x3,x4,y1,y2,y3,y4;
 
-
+void changeShapeValues(int a1,int a2,int a3,int a4,int b1,int b2,int b3,int b4){
+	x1 = a1; y1 = b1;
+	x2 = a2; y2 = b2;
+	x3 = a3; y3 = b3;
+	x4 = a4; y4 = b4;	
+}	
+	
+	
+void generateShape(int randomShapeValue){
+	if (randomShapeValue == 1){
+			changeShapeValues(1,2,2,3,8,8,9,9);  
+        }
+    else if(randomShapeValue == 2){
+			changeShapeValues(1,2,2,3,8,8,7,7);     
+        }
+    else if(randomShapeValue == 3){
+			changeShapeValues(2,2,2,1,7,8,9,9);
+        }
+    else if(randomShapeValue == 4){
+			changeShapeValues(1,2,3,4,8,8,8,8);
+        }
+    else if(randomShapeValue == 5){
+			changeShapeValues(1,1,2,2,8,9,8,9);
+        }
+    else if(randomShapeValue == 6){
+			changeShapeValues(1,2,2,2,8,7,8,9);
+        }
+	else if(randomShapeValue == 7){
+			changeShapeValues(1,2,2,2,7,7,8,9);
+        }
+}
+	
 	
 int main(){
 	
@@ -30,26 +62,18 @@ int main(){
 	yMax = 29;
 	xMax = 33;
 	start_y = start_x = 0;
-	
-	
-	
 	bool game = true;
-	
 	int rows = 28;
 	int cols = 16;
 	char gameBoard[rows][cols]; 
-	
 	int Score = 0;
-	
+	bool reachedFourthRow = false;
 	
 	for (int i = 0; i < rows; ++i) {
         for (int j = 1; j < cols; ++j) {
             gameBoard[i][j] = ' ';
         }
-    }
-	
-	
-	
+    }	
 	
 	WINDOW * mainwin = newwin(yMax, xMax, start_y, start_x);
 	refresh();
@@ -57,16 +81,13 @@ int main(){
 	
 	box(mainwin, 0, 0);
 	
-	
 	mvwprintw(mainwin, 14, 5, "Press any key to start");
 	mvwprintw(mainwin, 15, 5, "Move with the arrow keys");
 	mvwprintw(mainwin, 16, 5, "Rotate with the up arrow");
 	wrefresh(mainwin);
 	
-	
 	WINDOW *scorewin = newwin(5, 25, start_y, xMax);
     box(scorewin, 0, 0);
-  
   
     wrefresh(scorewin);
 	
@@ -82,157 +103,22 @@ int main(){
 		wrefresh(scorewin);
 		wattroff(scorewin, A_BOLD);
 		
-		int  x1 = 0;  int y1 = 0;
-		int  x2 = 0;  int y2 = 0;
-		int  x3 = 0;  int y3 = 0;
-		int  x4 = 0;  int y4 = 0;
-		
 		srand(time(0));
 		int random_shape = (rand() % 7) + 1; 
-		
-		/*
-    
-    O
-    O O
-      O 
-      
-        O
-      O O
-      O
-      
-          O
-      O O O 
-       
-      O
-      O
-      O
-      O
-      
-       O O 
-       O O
-       
-         O 
-       O O O
-      
-      
-      O   
-      O O O 
-      
-      
-    */
-		
 		int press= 1;
 		
-		
-		
-		
-		if (random_shape == 1){
-            x1 = 1;
-            x2 = 2;
-            x3 = 2;
-            x4 = 3;
-            y1 = 8;
-            y2 = 8;
-            y3 = 9;
-            y4 = 9;
-        }
-        else if(random_shape == 2){
-            x1 = 1;
-            x2 = 2;
-            x3 = 2;
-            x4 = 3;
-            y1 = 8;
-            y2 = 8;
-            y3 = 7;
-            y4 = 7;
-        }
-        else if(random_shape == 3){
-            x1 = 2;
-            x2 = 2;
-            x3 = 2;
-            x4 = 1;
-            y1 = 7;
-            y2 = 8;
-            y3 = 9;
-            y4 = 9;
-        }
-        else if(random_shape == 4){
-            x1 = 1;
-            x2 = 2;
-            x3 = 3;
-            x4 = 4;
-            y1 = 8;
-            y2 = 8;
-            y3 = 8;
-            y4 = 8;
-        }
-        else if(random_shape == 5){
-            x1 = 1;
-            x2 = 1;
-            x3 = 2;
-            x4 = 2;
-            y1 = 8;
-            y2 = 9;
-            y3 = 8;
-            y4 = 9;
-        }
-        else if(random_shape == 6){
-            x1 = 1;
-            x2 = 2;
-            x3 = 2;
-            x4 = 2;
-            y1 = 8;
-            y2 = 7;
-            y3 = 8;
-            y4 = 9;
-        }
-		else if(random_shape == 7){
-            x1 = 1;
-            x2 = 2;
-            x3 = 2;
-            x4 = 2;
-            y1 = 7;
-            y2 = 7;
-            y3 = 8;
-            y4 = 9;
-        }
-		
-		
-		
-		
-		
-		if(gameBoard[4][0]=='X' || 
-				gameBoard[4][1]=='X' ||
-				gameBoard[4][2]=='X' ||
-				gameBoard[4][3]=='X' ||
-				gameBoard[4][4]=='X' ||
-				gameBoard[4][5]=='X' ||
-				gameBoard[4][6]=='X' ||
-				gameBoard[4][7]=='X' ||
-				gameBoard[4][8]=='X' ||
-				gameBoard[4][9]=='X' ||
-				gameBoard[4][10]=='X' ||
-				gameBoard[4][11]=='X' ||
-				gameBoard[4][12]=='X' ||
-				gameBoard[4][13]=='X' ||
-				gameBoard[4][14]=='X' ||
-				gameBoard[4][15]=='X'){
-					
-						game=false;
-						break;
-					
-				}
+		generateShape(random_shape);
+
+
+ if (x1 + 1 == rows || x2 + 1 == rows || x3 + 1 == rows || x4 + 1 == rows ||
+        gameBoard[x1 + 1][y1] == 'X' || gameBoard[x2 + 1][y2] == 'X' ||
+        gameBoard[x3 + 1][y3] == 'X' || gameBoard[x4 + 1][y4] == 'X') {
+
+        reachedFourthRow = true;
+    }
 	
-			
-		
 		
 		for (int n = 0; n < rows ; n++){
-			
-			
-		
-			
-			
-			
 				int input = getch();
 
 		switch (input) {
@@ -286,386 +172,175 @@ int main(){
 		
 				
 				if(random_shape==1 && press == 1){
-					
-					
-					y1 = y1+2;
-					x2 = x2-1;
-					y2 = y2+1;
-					x4 = x4-1;
-					y4 = y4-1;
-				
-					
-					
-						
+					changeShapeValues(x1,x2-1,x3,x4-1,y1+2,y2+1,y3,y4-1);
 					press= 2;
 					break;
 				}
 				
 			
-					if(random_shape==1 && press == 2){
-						
-					x1 = x1+2;
-					y1 = y1-1;
-					x2 = x2+1;
-					y3 = y3-1;
-					x4 = x4-1;
-					
-					
+				if(random_shape==1 && press == 2){
+					changeShapeValues(x1+2,x2+1,x3,x4-1,y1-1,y2,y3-1,y4);	
 					press = 3;
 					break;
 				}
 				
-					if(random_shape==1 && press == 3){
-					x1 = x1-1;
-					y1 = y1-1;
-					x3 = x3-1;
-					y3 = y3+1;
-					y4 = y4+2;
-					
-					
+				if(random_shape==1 && press == 3){
+					changeShapeValues(x1-1,x2,x3-1,x4,y1-1,y2,y3+1,y4+2);	
 					press = 4;
 					break;
 				}
-				
-				
-					if(random_shape==1 && press == 4){
-					x1 = x1-1;
-					y2 = y2-1;
-					x3 = x3+1;
-					x4 = x4+2;
-					y4 = y4-1;
-					
-					
+
+				if(random_shape==1 && press == 4){
+					changeShapeValues(x1-1,x2,x3+1,x4+2,y1,y2-1,y3,y4-1);	
 					press = 1;
 					break;
 				}
 				
-			if(random_shape==2 && press == 1){
-					
-					
-					x1 = x1+1;
-					y1 = y1+1;
-					x3 = x3-1;
-					y3 = y3+1;
-					x4 = x4-2;
-				
-					
-						
+				if(random_shape==2 && press == 1){
+					changeShapeValues(x1+1,x2,x3-1,x4-2,y1+1,y2,y3+1,y4);	
 					press= 2;
 					break;
 				}
 				
 				if(random_shape==2 && press == 2){
-					x1 = x1+1;
-					y1 = y1-2;
-					y2 = y2-1;
-					x3 = x3+1;
-					y4 = y4+1;
-					
-					
-					
-					
+					changeShapeValues(x1+1,x2,x3+1,x4,y1-2,y2-1,y3,y4+1);
 					press = 3;
 					break;
 				}
 				
 				if(random_shape==2 && press == 3){
-					x1 = x1-2;
-					x2 = x2-1;
-					y2 = y2+1;
-					x4 = x4+1;
-					y4 = y4+1;
-					
-					
+					changeShapeValues(x1-2,x2-1,x3,x4+1,y1,y2+1,y3,y4+1);
 					press = 4;
 					break;
 				}
-				
-				
-				
-				
+
 				if(random_shape==2 && press == 4){
-					y1 = y1+1;
-					x2 = x2+1;
-					y3 = y3-1;
-					x4 = x4+1;
-					y4 = y4-2;
-					
-					
+					changeShapeValues(x1,x2+1,x3,x4+1,y1+1,y2,y3-1,y4-2);	
 					press = 1;
 					break;
 				}
-			
-			
-			
-			if(random_shape==3 && press == 1){
-					
-					
-					x1 = x1-2;
-					y1 = y1+2;
-					x2 = x2-1;
-					y2 = y2+1;
-					x4 = x4+1;
-					y4 = y4+1;
-				
-					
-						
+
+				if(random_shape==3 && press == 1){
+					changeShapeValues(x1-2,x2-1,x3,x4+1,y1+2,y2+1,y3,y4+1);	
 					press= 2;
 					break;
 				}
 				
 				if(random_shape==3 && press == 2){
-					x1 = x1+1;
-					y1 = y1+2;
-					y2 = y2+1;
-					x3 = x3-1;
-					y4 = y4-1;
-					
-					
-					
-					
+					changeShapeValues(x1+1,x2,x3-1,x4,y1+2,y2+1,y3,y4-1);	
 					press = 3;
 					break;
 				}
 				
 				if(random_shape==3 && press == 3){
-					x1 = x1+3;
-					y1 = y1-1;
-					x2 = x2+2;
-					x3 = x3+1;
-					y3 = y3+1;
-					
-					
+					changeShapeValues(x1+3,x2+2,x3+1,x4,y1-1,y2,y3+1,y4);	
 					press = 4;
 					break;
 				}
 			
 				if(random_shape==3 && press == 4){
-					x1 = x1-2;
-					y1 = y1-3;
-					x2 = x2-1;
-					y2 = y2-2;
-					y3 = y3-1;
-					x4 = x4-1;
-				
-					
-					
+					changeShapeValues(x1-2,x2-1,x3,x4-1,y1-3,y2-2,y3-1,y4);	
 					press = 1;
 					break;
 				}
-				
-				
-				
-				
-			
-			
-			if(random_shape==4 && press == 1){
-					
-					
-					x1 = x1+1;
-					y1 = y1+3;
-					y2 = y2+2;
-					x3 = x3-1;
-					y3 = y3+1;
-					x4 = x4-2;
-				
-					
-						
+
+				if(random_shape==4 && press == 1){
+					changeShapeValues(x1+1,x2,x3-1,x4-2,y1+3,y2+2,y3+1,y4);	
 					press= 2;
 					break;
 				}
 				
 				if(random_shape==4 && press == 2){
-					x1 = x1+3;
-					y1 = y1-3;
-					x2 = x2+2;
-					y2 = y2-2;
-					x3 = x3+1;
-					y3 = y3-1;
-					
-					
-					
+					changeShapeValues(x1+3,x2+2,x3+1,x4,y1-3,y2-2,y3-1,y4);	
 					press = 3;
 					break;
 				}
 				
 				if(random_shape==4 && press == 3){
-					x1 = x1-3;
-					y1 = y1-3;
-					x2 = x2-2;
-					y2 = y2-2;
-					x3 = x3-1;
-					y3 = y3-1;
-					
-					
+					changeShapeValues(x1-3,x2-2,x3-1,x4,y1-3,y2-2,y3-1,y4);	
 					press = 4;
 					break;
 				}
-				
-				
+
 				if(random_shape==4 && press == 4){
-					x1 = x1-1;
-					y1 = y1+3;
-					y2 = y2+2;
-					x3 = x3+1;
-					y3 = y3+1;
-					x4 = x4+2;
-					
-					
+					changeShapeValues(x1-1,x2,x3+1,x4+2,y1+3,y2+2,y3+1,y4);
 					press = 1;
 					break;
 				}
-				
-				
-				if(random_shape==6 && press == 1){
-					
-					
-					y1 = y1+1;
-					x2 = x2-2;
-					y2 = y2+1;
-					x3 = x3-1;
-					y4 = y4-1;
-					
-				
-					
-						
+
+				if(random_shape==6 && press == 1){	
+				changeShapeValues(x1,x2-2,x3-1,x4,y1+1,y2+1,y3,y4-1);	
 					press= 2;
 					break;
 				}
 				
 				if(random_shape==6 && press == 2){
-					x1 = x1+1;
-					y1 = y1-1;
-					x2 = x2+1;
-					y2 = y2+1;
-					x4 = x4-1;
-					y4 = y4-1;
-					
-					
-					
-					
+					changeShapeValues(x1+1,x2+1,x3,x4-1,y1-1,y2+1,y3,y4-1);	
 					press = 3;
 					break;
 				}
 				
 				if(random_shape==6 && press == 3){
-					x1 = x1-1;
-					y1 = y1-1;
-					x2 = x2+1;
-					y2 = y2-1;
-					x4 = x4-1;
-					y4 = y4+1;
-					
-					
-					
+					changeShapeValues(x1-1,x2+1,x3,x4-1,y1-1,y2-1,y3,y4+1);	
 					press = 4;
 					break;
 				}
-				
-				
+
 				if(random_shape==6 && press == 4){
-					y1 = y1+1;
-					y2 = y2-1;
-					x3 = x3+1;
-					x4 = x4+2;
-					y4 = y4+1;
-					
-					
+					changeShapeValues(x1,x2,x3+1,x4+2,y1+1,y2-1,y3,y4+1);	
 					press = 1;
 					break;
 				}
-				
-				
+
 				if(random_shape==7 && press == 1){
-					
-					x1 = x1-1;
-					y1 = y1+3;
-					x2 = x2-2;
-					y2 = y2+2;
-					x3 = x3-1;
-					y3 = y3+1;
-					
-					
-				
-					
-						
+					changeShapeValues(x1-1,x2-2,x3-1,x4,y1+3,y2+2,y3+1,y4);	
 					press= 2;
 					break;
 				}
 				
 				if(random_shape==7 && press == 2){
-					
-					x1 = x1+3;
-					y1 = y1+1;
-					x2 = x2+2;
-					y2 = y2+2;
-					x3 = x3+1;
-					y3 = y3+1;
-					
-					
-					
-					
+					changeShapeValues(x1+3,x2+2,x3+1,x4,y1+1,y2+2,y3+1,y4);	
 					press = 3;
 					break;
 				}
 				
 				if(random_shape==7 && press == 3){
-					
-					x1 = x1+1;
-					y1 = y1-3;
-					x2 = x2+2;
-					y2 = y2-2;
-					x3 = x3+1;
-					y3 = y3-1;
-					
-					
-					
+					changeShapeValues(x1+1,x2+2,x3+1,x4,y1-3,y2-2,y3-1,y4);
 					press = 4;
 					break;
 				}
 				
-				
 				if(random_shape==7 && press == 4){
-					x1 = x1-3;
-					y1 = y1-1;
-					x2 = x2-2;
-					y2 = y2-2;
-					x3 = x3-1;
-					y3 = y3-1;
-					
-					
+					changeShapeValues(x1-3,x2-2,x3-1,x4,y1-1,y2-2,y3-1,y4);	
 					press = 1;
 					break;
 				}
 				
-				
-				
-				
 				refresh();
 				break;
 			
-		}
+			}
 		}
 	
 			
 			
 			
 			if(x1+1 == rows || x2+1 == rows || x3+1 == rows || x4+1 == rows  ||
-			gameBoard[x1+1][y1] == 'X'||
-			gameBoard[x2+1][y2] == 'X'||
-			gameBoard[x3+1][y3] == 'X'||
-			gameBoard[x4+1][y4] == 'X'){
+												   gameBoard[x1+1][y1] == 'X'||
+												   gameBoard[x2+1][y2] == 'X'||
+												   gameBoard[x3+1][y3] == 'X'||
+												   gameBoard[x4+1][y4] == 'X'){
 			
 			gameBoard[x1][y1] = 'X';
 			gameBoard[x2][y2] = 'X';
 			gameBoard[x3][y3] = 'X';
 			gameBoard[x4][y4] = 'X';
 			
-			
-			
-			
-			
-			
+		
+			if (reachedFourthRow) {
+		        game = false;
+		        break;
+		    }
 			
             for (int i = rows - 1; i >= 0; --i) {
                 bool rowFilled = true;
@@ -689,82 +364,41 @@ int main(){
                     }
                 }
             }
-			
-			
-			
-			
-			
-			
-			
-			
-			
 				break;
 			}
 			else{
 				
-			
 			x1++;
 			x2++;
 			x3++;
 			x4++;
-		
 			gameBoard[x1][y1] = 'I';
 			gameBoard[x2][y2] = 'I';
 			gameBoard[x3][y3] = 'I';
 			gameBoard[x4][y4] = 'I';
-			
-			
-			
-			
-			
-			
 		}
 		
-		
-		
-			
-		
-		
-		
-		
+
 		
 		for (int i = 0; i < rows; ++i) {
         		for (int j = 1; j < cols; ++j) {
         	    mvprintw(i, j * 2, "%c", gameBoard[i][j]); 
-        										}		
-    										}
+        		}		
+   		}
 		
 			for (int i = 0; i < rows; ++i) {
        			 for (int j = 1; j < cols; ++j) {
             			if(gameBoard[i][j]!='X'){
-						
 							gameBoard[i][j] = ' ';
-						}
+			}
         }
     }
-		
-		
-		
-		
 		refresh();
 		usleep(89500);
 		
 	}
-	
-		
-	
-	
 		mvwprintw(scorewin, 2, 1, "Your Score: %d", Score); 
         wrefresh(scorewin);
-			
-			
-    	
-			
-			
-			
-			
-			
-		
 			
 					}				
 			
@@ -776,20 +410,7 @@ int main(){
 	wattroff(gameOverWin, A_BOLD);
 	usleep(3000000);
 		
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	// zakaĹczamy prace ncurses
 	delwin(mainwin);
 	endwin();
 	refresh();
